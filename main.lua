@@ -36,9 +36,9 @@ local function announce(msg, notPlayer)
     --print(msg, "| to PARTY - in Dungeon (notPlayer)")
   elseif IsInRaid() then
     SendChatMessage(msg, "RAID")
-    --print(msg, "| to RAID - in Raid")
+    --[[print(msg, "| to RAID - in Raid")
   else
-    print(msg)
+    print(msg)]]
   end
 end
 
@@ -50,16 +50,23 @@ local function eventHandler(self, event, ...)
   else
     local _, subEvent, _, _, sourceName, _, _, _, destName, _, _, spellID, _, _, missType = ...
     if subEvent == "SPELL_AURA_APPLIED" and taunts[spellID] then
-      if sourceName ~= playerName then
-        announce(sourceName .. " taunted " .. destName .."! ("..GetSpellLink(spellID)..")", true)
-      else
-        announce(sourceName .. " taunted " .. destName .."! ("..GetSpellLink(spellID)..")")
+      local role = UnitGroupRolesAssigned(sourceName)
+      print(sourceName.." ("..role..") "..destName)
+      if role ~= "TANK" then
+        if sourceName ~= playerName then
+          announce(sourceName .. " taunted " .. destName .."! ("..GetSpellLink(spellID)..")", true)
+        else
+          announce(sourceName .. " taunted " .. destName .."! ("..GetSpellLink(spellID)..")")
+        end
       end
     elseif subEvent == "SPELL_MISSED" and taunts[spellID] then
-      if sourceName ~= playerName then
-        announce(sourceName .. " failed to taunt " .. destName .. " - "..(missType or "FAILED").."! ("..GetSpellLink(spellID)..")", true)
-      else
-        announce(sourceName .. " failed to taunt " .. destName .. " - "..(missType or "FAILED").."! ("..GetSpellLink(spellID)..")")
+      local role = UnitGroupRolesAssigned(destName)
+      if role ~= "TANK" then
+        if sourceName ~= playerName then
+          announce(sourceName .. " failed to taunt " .. destName .. " - "..(missType or "FAILED").."! ("..GetSpellLink(spellID)..")", true)
+        else
+          announce(sourceName .. " failed to taunt " .. destName .. " - "..(missType or "FAILED").."! ("..GetSpellLink(spellID)..")")
+        end
       end
     end
   end
