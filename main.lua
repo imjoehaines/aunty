@@ -51,7 +51,7 @@ local function eventHandler(self, event, ...)
     local _, subEvent, _, _, sourceName, _, _, _, destName, _, _, spellID, _, _, missType = ...
     if subEvent == "SPELL_AURA_APPLIED" and taunts[spellID] then
       local role = UnitGroupRolesAssigned(sourceName)
-      print(sourceName.." ("..role..") "..destName)
+      --print(sourceName.." ("..role..") "..destName)
       if role ~= "TANK" then
         if sourceName ~= playerName then
           announce(sourceName .. " taunted " .. destName .."! ("..GetSpellLink(spellID)..")", true)
