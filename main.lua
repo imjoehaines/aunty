@@ -60,13 +60,10 @@ local function eventHandler(self, event, ...)
         end
       end
     elseif subEvent == "SPELL_MISSED" and taunts[spellID] then
-      local role = UnitGroupRolesAssigned(destName)
-      if role ~= "TANK" then
-        if sourceName ~= playerName then
-          announce(sourceName .. " failed to taunt " .. destName .. " - "..(missType or "FAILED").."! ("..GetSpellLink(spellID)..")", true)
-        else
-          announce(sourceName .. " failed to taunt " .. destName .. " - "..(missType or "FAILED").."! ("..GetSpellLink(spellID)..")")
-        end
+      if sourceName ~= playerName then
+        announce(sourceName .. " failed to taunt " .. destName .. " - "..(missType or "FAILED").."! ("..GetSpellLink(spellID)..")", true)
+      else
+        announce(sourceName .. " failed to taunt " .. destName .. " - "..(missType or "FAILED").."! ("..GetSpellLink(spellID)..")")
       end
     end
   end
