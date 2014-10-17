@@ -1,7 +1,7 @@
-## Interface: 50400
+## Interface: 60000
 ## Author: Infected Mushroom
 ## Title: aunty
-## Version: 1.2
+## Version: 1.3
 ## Notes: A simple taunt announcer
 
 main.lua
